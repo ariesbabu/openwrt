@@ -1,0 +1,52 @@
+config defaults
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option syn_flood '1'
+	option flow_offloading '1'
+
+config defaults 'defaults'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'REJECT'
+	option syn_flood '1'
+	option flow_offloading '1'
+
+config zone
+	option name 'vpn_lan'
+	option network 'vpn_lan'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+
+config zone
+	option name 'wg'
+	option network 'wg0'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+	option masq '1'
+	option mtu_fix '1'
+
+config zone
+	option name 'uplink'
+	option network 'uplink'
+	option input 'ACCEPT'
+	option output 'ACCEPT'
+	option forward 'ACCEPT'
+	option masq '1'
+	option mtu_fix '1'
+
+config forwarding
+	option src 'vpn_lan'
+	option dest 'wg'
+
+config rule
+	option name 'Allow vpn_lan to uplink'
+	option src 'vpn_lan'
+	option dest 'uplink'
+	option target 'ACCEPT'
+
+config forwarding
+	option src 'wg'
+	option dest 'uplink'

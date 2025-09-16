@@ -1,0 +1,36 @@
+config interface 'lan'
+	option device 'eth0'
+	option proto 'dhcp'
+
+config interface 'wg0'
+	option proto 'wireguard'
+	option private_key '='
+	list addresses '10.14.0.2/16'
+
+config wireguard_wg0
+	option public_key '='
+	option endpoint_host 'jp-tok.prod.surfshark.com'
+	option endpoint_port '51820'
+	option persistent_keepalive '25'
+	list allowed_ips '0.0.0.0/0'
+	list allowed_ips '::/0'
+
+config interface 'loopback'
+	option device 'lo'
+	option proto 'static'
+	option ipaddr '127.0.0.1'
+	option netmask '255.0.0.0'
+
+config interface 'uplink'
+	option device 'eth0'
+	option proto 'dhcp'
+
+config interface 'vpn_lan'
+	option proto 'static'
+	option ipaddr '192.168.2.1'
+	option netmask '255.255.255.0'
+	option device 'br-vpn_lan phy0-ap0'
+
+config device 'br_vpn_lan'
+	option name 'br-vpn_lan'
+	option type 'bridge'
